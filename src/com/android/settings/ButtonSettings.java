@@ -58,6 +58,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private static final String KEY_ENABLE_NAVIGATION_BAR = "enable_nav_bar";
     private static final String KEY_ENABLE_HW_KEYS = "enable_hw_keys";
     private static final String KEY_VOLUME_WAKE_DEVICE = "volume_key_wake_device";
+    private static final String KEY_VOLBTN_MUSIC_CTRL = "volbtn_music_controls";
     private static final String KEY_POWER_END_CALL = "power_end_call";
     private static final String KEY_HOME_ANSWER_CALL = "home_answer_call";
 
@@ -103,6 +104,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mPowerEndCall;
     private CheckBoxPreference mHomeAnswerCall;
     private CheckBoxPreference mVolumeKeyWakeControl;
+    private CheckBoxPreference mVolBtnMusicCtrl;
 
     private Handler mHandler;
 
@@ -234,6 +236,10 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             int wakeControlAction = Settings.System.getInt(resolver,
                     Settings.System.VOLUME_WAKE_SCREEN, 0);
             mVolumeKeyWakeControl = initCheckBox(KEY_VOLUME_WAKE_DEVICE, (wakeControlAction == 1));
+
+            int volBtnMusicCtrl = Settings.System.getInt(resolver,
+                    Settings.System.VOLUME_MUSIC_CONTROLS, 0);
+            mVolBtnMusicCtrl = initCheckBox(KEY_VOLBTN_MUSIC_CTRL, (volBtnMusicCtrl == 1));
         } else {
             prefScreen.removePreference(volumeCategory);
         }
@@ -345,6 +351,10 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         } else if (preference == mVolumeKeyWakeControl) {
             handleCheckBoxChange(mVolumeKeyWakeControl, newValue,
                     Settings.System.VOLUME_WAKE_SCREEN);
+            return true;
+        } else if (preference == mVolBtnMusicCtrl) {
+            handleCheckBoxChange(mVolumeKeyWakeControl, newValue,
+                    Settings.System.VOLUME_MUSIC_CONTROLS);
             return true;
         }
         return false;
